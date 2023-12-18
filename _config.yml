@@ -73,7 +73,7 @@ theme_mode: # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://img.immengzi.wiki/logo.jpg
+avatar: https://img.mengzi.li/logo.jpg
 
 # boolean type, the global switch for TOC in posts.
 toc: true
