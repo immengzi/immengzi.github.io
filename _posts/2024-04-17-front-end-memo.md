@@ -71,7 +71,15 @@ tags: [Vue,React,HTTP,CORS,Cookie,Session]
 > ...
 > 因为函数在js中既可以当做值传递和返回，也可当做对象和构造函数，所有函数在运行时需要确定其当前的运行环境，this就出生了，所以，this会根据运行环境的改变而改变，同时，函数中的this也只能在运行时才能最终确定运行环境；
 
-### 继承与原型链
+### 原型/原型链与继承
+
+原型是 JavaScript 对象相互继承特性的机制。
+
+有个对象叫 `Object.prototype`，它是最基础的原型，所有对象默认都拥有它。`Object.prototype` 的原型是 `null`，所以它位于原型链的终点。
+
+> prototype 与 `__proto__` 的联系
+>
+> `[[Prototype]]` 是对象内维护其对应原型对象的属性，但它不可直接被外界访问和修改；`__proto__` 是浏览器厂商实现的访问和修改对象内部属性 `[[Prototype]]` 的访问器属性(getter/setter)，不规范，现多用ECMAScript 定义的 `Object.getPrototypeOf` 和 `Object.setPrototypeOf` 代替；而 `prototype` 则是原型对象真正创建和存储的地方，在这里可以定义一些公用的属性和方法。
 
 当谈到继承时，JavaScript 只有一种结构：对象。每个对象（object）都有一个私有属性指向另一个名为**原型**（prototype）的对象。原型对象也有一个自己的原型，层层向上直到一个对象的原型为 `null`。根据定义，`null` 没有原型，并作为这个**原型链**（prototype chain）中的最后一个环节。
 
@@ -82,6 +90,11 @@ tags: [Vue,React,HTTP,CORS,Cookie,Session]
    这种方法并不是万能的，它不能判断出 null 和数组。判断 null 可以使用 `if (obj === null)`，判断数组可以使用 `Array.isArray(obj)`
 
 2. `instanceof`
+
+   ```js
+   // 判断 constructor 是否存在于 obj 的原型链上
+   obj instanceof constructor
+   ```
 
 3. `constructor`
 
@@ -387,10 +400,10 @@ Set-Cookie: <name>=<value>[; <Max-Age>=<age>]
 
 ### sessionStorage
 
-- 页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。
-- **在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文，这点和 session cookie 的运行方式不同。**
-- 打开多个相同的 URL 的 Tabs 页面，会创建各自的 `sessionStorage`。
-- 关闭对应浏览器标签或窗口，会清除对应的 `sessionStorage`。
+- 页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话
+- 在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文，这点和 session cookie 的运行方式不同
+- 打开多个相同的 URL 的 Tabs 页面，会创建各自的 `sessionStorage`
+- 关闭对应浏览器标签或窗口，会清除对应的 `sessionStorage`
 
 ### localStorage
 
@@ -447,12 +460,57 @@ Set-Cookie: <name>=<value>[; <Max-Age>=<age>]
 
 ### HTTP 缓存机制
 
-之前按照个别面经网站去理解，可能因为被压缩了某些助于理解的东西，导致面试时容易被问住。翻来覆去，还是 MDN 文档讲得好。
+之前按照个别面经网站去理解，可能因为被压缩了某些助于理解的东西，导致面试时容易被问住。翻来覆去，还是 [HTTP 缓存 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching) 讲得好。
 
-[HTTP 缓存 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching)
+分为私有缓存和共享缓存。
+
+#### HTTP 缓存流程
+
+1. 在浏览器缓存中查询
+
+2. 如果是第一次请求数据，无缓存数据，则直接向服务器发起请求，浏览器根据 Cache-Control 是否为 no-store 判断是否可以对返回的数据进行缓存，如果为 no-store 则不使用缓存
+
+3. 如果有缓存数据，则响应体中会有 Expires/max-age 字段注明缓存的有效期，都存在时以 max-age 为准
+
+4. 过时的响应不会立即被丢弃。HTTP 有一种机制，可以通过询问源服务器将陈旧的响应转换为新的响应。这称为验证/重新验证
+
+   1. **Last-Modified/If-Modified-Since**: 
+
+      响应过时后，客户端请求标头加上 If-Modified-Since（已过时响应的 Last-Modified）以询问服务器自指定时间以来是否有任何的改变。如果内容自指定时间以来没有更改，服务器将响应 `304 Not Modified`
+
+      由于此响应仅表示“没有变化”，因此没有响应主体——只有一个状态码——因此传输大小非常小）
+
+   2. **ETag/If-None-Match**: 
+
+      `ETag` 响应标头的值是服务器生成的任意值。服务器对于生成值没有任何限制，因此服务器可以根据他们选择的任何方式自由设置值——例如主体内容的哈希或版本号。
+
+      响应过时后，客户端请求标头加上 If-None-Match（已过时响应的 ETag）。如果服务器为请求的资源确定的 `ETag` 标头的值与请求中的 `If-None-Match` 值相同，则服务器将返回 `304 Not Modified`。
+
+      但是，如果服务器确定请求的资源现在应该具有不同的 `ETag` 值，则服务器将其改为 `200 OK` 和资源的最新版本进行响应。
+
+   3. 在评估如何使用 `ETag` 和 `Last-Modified` 时，请考虑以下几点：在缓存重新验证期间，如果 `ETag` 和 `Last-Modified` 都存在，则 `ETag` 优先。因此，如果你只考虑缓存，你可能会认为 `Last-Modified` 是不必要的。然而，`Last-Modified` 不仅仅对缓存有用；相反，它是一个标准的 HTTP 标头，内容管理 (CMS) 系统也使用它来显示上次修改时间，由爬虫调整爬取频率，以及用于其他各种目的。所以考虑到整个 HTTP 生态系统，最好同时提供 `ETag` 和 `Last-Modified`
+
+5. 强制重新验证
+
+   `no-cache` 指令将强制客户端在重用任何存储的响应之前发送验证请求。如果请求的资源已更新，客户端将收到 `200 OK` 响应，否则，如果请求的资源尚未更新，则会收到 `304 Not Modified` 响应
+
+   ```http
+   Cache-Control: no-cache
+   解决 HTTP/1.1 之前的许多实现无法处理 no-cache 这一指令
+   Cache-Control: max-age=0, must-revalidate
+   ```
+
+#### 强制缓存和协商缓存
+
+先判断缓存是否过期
+
+- 没过期，触发**强制缓存**，浏览器直接读取本地文件，http状态码200 `(from memory cache)`或者 `(from disk cache)`
+- 已过期，触发**协商缓存**，发起请求询问服务器该文件是否有更新,没有更新则使用浏览器本地缓存文件，文件有更新则服务器返回新的文件给客户端，且更新过期时间并缓存起来
 
 ## 参考文章
 
 1. [JS作用域和变量提升看这一篇就够了](https://juejin.cn/post/6844904161855684616)
 1. [彻底搞懂JavaScript中的this指向问题](https://zhuanlan.zhihu.com/p/42145138)
 1. [深入理解 JavaScript 之事件循环(Event Loop)](https://github.com/Jacky-Summer/personal-blog/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JavaScript%E7%B3%BB%E5%88%97/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%20JavaScript%20%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF(Event%20Loop).md)
+1. [JS 基础篇 - prototype与 ` __proto__` 的关系与区别](https://github.com/jtwang7/JavaScript-Note/issues/51)
+
