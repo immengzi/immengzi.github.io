@@ -31,6 +31,35 @@ vue3：ES6 [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Refer
 - 对数组的监听：因为数组 length 的特殊性（length 的描述符 configurable 和 enumerable 为 false，并且*妄图*修改 configurable 为 True 时 JS 会直接报错：VM305:1 Uncaught TypeError: Cannot redefine property: length），defineproperty 无法监听数组长度变化,，Vue 只能通过重写数组方法的方式变现达成监听的效果，但仅重写数组方法还是不能解决修改数组下标时监听的问题，只能再使用自定义 set 函数的方式，但是对 Proxy 代理对象进行操作时，所有的操作都会被捕捉，包括数组的方法和 length 操作
 - defineProperty 只能监听到 value 的 get/set 操作，但是 Proxy 有更全面和丰富的拦截器（除 `[[getOwnPropertyNames]]` 以外所有JS 的对象操作）
 
+## TypeScript支持
+
+Vue3 由 TypeScript 重写，相对于 Vue2 有更好的 TypeScript 支持。
+
+## API 类型
+
+Vue2 是选项式 API（Options API），一个逻辑会散乱在文件不同位置（data、props、computed、watch、生命周期钩子等），导致代码的可读性变差。当需要修改某个逻辑时，需要上下来回跳转文件位置。
+
+Vue3 组合式API（Composition API）则很好地解决了这个问题，可将同一逻辑的内容写到一起，增强了代码的可读性、内聚性，其还提供了较为完美的逻辑复用性方案。
+
+## 生命周期钩子函数
+
+基本一致，Vue3 的钩子函数前面多了"on"标识。明显的区别在于，组合式 API 在 setup 函数执行时创建组件，选项式 API 在 beforeCreate 和 created 之间创建组件。Vue3 需要先导入生命周期钩子。
+
+![组件生命周期图示](https://cn.vuejs.org/assets/lifecycle_zh-CN.W0MNXI0C.png)
+
+## 多根节点/Fragments
+
+在 Vue2 中，模板中只能有一个根节点，Vue3 支持多个根节点
+
+```vue
+// 以下代码在 Vue2 中会报错，需要在外面包裹一层 <div>
+<template>
+<header></header>
+<main></main>
+<footer></footer>
+</template>
+```
+
 ## 参考
 
 1. [defineProperty 和 Proxy区别](https://segmentfault.com/a/1190000041084082)
