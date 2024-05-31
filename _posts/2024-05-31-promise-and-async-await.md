@@ -50,17 +50,17 @@ tags: [Promise, Async, Await]
 > let value = 1;
 > 
 > doSomething(() => {
->    value = 2;
+>        value = 2;
 > });
 > 
 > console.log(value);
 > 
 > function doSomething(callback) {
->   callback();  // 同步调用
+>       callback();  // 同步调用
 > }
 > 
 > function doSomething(callback) {
->   setTimeout(callback, 1000);  // 异步调用，延迟 1000 毫秒执行
+>       setTimeout(callback, 1000);  // 异步调用，延迟 1000 毫秒执行
 > }
 > ```
 >
@@ -138,15 +138,15 @@ tags: [Promise, Async, Await]
 
 #### 为什么？
 
-> 连续执行两个或者多个异步操作是一个常见的需求，在上一个操作执行成功之后，开始下一个的操作，并带着上一步操作所返回的结果。在旧的回调风格中，这种操作会导致经典的[回调地狱](http://callbackhell.com/)（很难直观地理解）。
+> 连续执行两个或者多个异步操作是一个常见的需求，在上一个操作执行成功之后，开始下一个的操作，并带着上一步操作所返回的结果。在旧的回调风格中，这种操作会导致经典的"回调地狱"。
 >
 > ```javascript
 > doSomething(function (result) {
-> doSomethingElse(result, function (newResult) {
->  doThirdThing(newResult, function (finalResult) {
->    console.log(`得到最终结果：${finalResult}`);
->  }, failureCallback);
-> }, failureCallback);
+>   doSomethingElse(result, function (newResult) {
+>     doThirdThing(newResult, function (finalResult) {
+>       console.log(`得到最终结果：${finalResult}`);
+>     }, failureCallback);
+>   }, failureCallback);
 > }, failureCallback);
 > ```
 >
@@ -168,7 +168,7 @@ tags: [Promise, Async, Await]
 > .then((result) => doSomethingElse(result))
 > .then((newResult) => doThirdThing(newResult))
 > .then((finalResult) => {
->  console.log(`得到最终结果：${finalResult}`);
+> console.log(`得到最终结果：${finalResult}`);
 > })
 > .catch(failureCallback);
 > ```
@@ -362,10 +362,10 @@ async function logIngredients() {
 
 > ```javascript
 > doSomething()
->   .then((result) => doSomethingElse(result))
->   .then((newResult) => doThirdThing(newResult))
->   .then((finalResult) => console.log(`得到最终结果：${finalResult}`))
->   .catch(failureCallback);
+>     .then((result) => doSomethingElse(result))
+>     .then((newResult) => doThirdThing(newResult))
+>     .then((finalResult) => console.log(`得到最终结果：${finalResult}`))
+>     .catch(failureCallback);
 > ```
 >
 
@@ -373,14 +373,14 @@ async function logIngredients() {
 
 > ```javascript
 > async function foo() {
->   try {
->     const result = await doSomething();
->     const newResult = await doSomethingElse(result);
->     const finalResult = await doThirdThing(newResult);
->     console.log(`得到最终结果：${finalResult}`);
->   } catch (error) {
->     failureCallback(error);
->   }
+>     try {
+>        const result = await doSomething();
+>        const newResult = await doSomethingElse(result);
+>        const finalResult = await doThirdThing(newResult);
+>        console.log(`得到最终结果：${finalResult}`);
+>     } catch (error) {
+>        failureCallback(error);
+>     }
 > }
 > ```
 >
@@ -390,29 +390,29 @@ async function logIngredients() {
 > 嵌套是一种可以限制 `catch` 语句的作用域的控制结构写法。明确来说，嵌套的 `catch` 只会捕获其作用域及以下的错误，而不会捕获链中更高层的错误。如果使用正确，可以实现细粒度的错误恢复。**简洁的 Promise 链式编程最好保持扁平化，不要嵌套 Promise，因为嵌套经常会是粗心导致的。**
 > ```javascript
 > doSomethingCritical()
-> .then((result) =>
->  doSomethingOptional()
->    .then((optionalResult) => doSomethingExtraNice(optionalResult))
->    .catch((e) => {}),
-> ) // 即便可选操作失败了，也会继续执行
-> .then(() => moreCriticalStuff())
-> .catch((e) => console.log(`严重失败：${e.message}`));
+>   .then((result) =>
+>     doSomethingOptional()
+>       .then((optionalResult) => doSomethingExtraNice(optionalResult))
+>       .catch((e) => {}),
+>   ) // 即便可选操作失败了，也会继续执行
+>   .then(() => moreCriticalStuff())
+>   .catch((e) => console.log(`严重失败：${e.message}`));
 > 
 > 
 > // async/await 版
 > async function main() {
-> try {
->  const result = await doSomethingCritical();
->  try {
->    const optionalResult = await doSomethingOptional(result);
->    await doSomethingExtraNice(optionalResult);
->  } catch (e) {
->    // 忽略可选步骤的失败并继续执行。
->  }
->  await moreCriticalStuff();
-> } catch (e) {
->  console.error(`严重失败：${e.message}`);
-> }
+>   try {
+>     const result = await doSomethingCritical();
+>     try {
+>       const optionalResult = await doSomethingOptional(result);
+>       await doSomethingExtraNice(optionalResult);
+>     } catch (e) {
+>       // 忽略可选步骤的失败并继续执行。
+>     }
+>     await moreCriticalStuff();
+>   } catch (e) {
+>     console.error(`严重失败：${e.message}`);
+>   }
 > }
 > ```
 
@@ -499,25 +499,25 @@ Promise.all([func1(), func2(), func3()]).then(([result1, result2, result3]) => {
 > let value = 1;
 > 
 > doSomething(() => {
-> value = 2;
+>     value = 2;
 > });
 > 
 > console.log(value);
 > 
 > function doSomething(callback) {
-> callback();  // 同步调用
+>     callback();  // 同步调用
 > }
 > 
 > function doSomething(callback) {
-> setTimeout(callback, 1000);  // 异步调用，延迟 1000 毫秒执行
+>     setTimeout(callback, 1000);  // 异步调用，延迟 1000 毫秒执行
 > }
 > 
 > function doSomething(callback) {
-> if (Math.random() > 0.5) { // Zalgo 状态: 同步异步混乱
->  callback();
-> } else {
->  setTimeout(() => callback(), 1000);
-> }
+>     if (Math.random() > 0.5) { // Zalgo 状态: 同步异步混乱
+>          callback();
+>     } else {
+>          setTimeout(() => callback(), 1000);
+>     }
 > }
 > ```
 >
