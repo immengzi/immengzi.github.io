@@ -4,13 +4,13 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-## 自我介绍
+## Who Am I
 
-- XMengH / 女 / 2003
-- 本科在读 / 武汉大学计算机科学与技术专业
-- GitHub：https://github.com/immengzi
+Hello! I'm XMengH, a current student at Wuhan University, specializing in Computer Science. 
 
-## 联系方式
+As a young woman and an aspiring web developer, I am dedicated and curious, always eager to explore both CS-related and non-CS topics. Feel free to reach out if you want to discuss technology, share ideas, or simply chat about anything interesting!
 
-- Email：immengzi[at]outlook[dot]com（我会随时查看）
-- QQ：1686769963（请说明来意）
+## Contact Me
+
+- Email: immengzi[at]outlook[dot]com (I check this all the time!)
+- QQ: 1686769963
