@@ -28,7 +28,7 @@ vue3：ES6 [Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Refer
 
 - 监听数据：defineProperty 需要知道具体属性且只能监听某个属性；Proxy 直接监听整个对象
 - 对原对象的影响：defineProperty 是通过在原对象身上新增或修改属性增加描述符的方式实现的监听效果，一定会修改原数据；而 Proxy 只是原对象的代理，Proxy 会返回一个代理对象不会在原对象上进行改动，对原数据无污染
-- 对数组的监听：因为数组 length 的特殊性（length 的描述符 configurable 和 enumerable 为 false，并且*妄图*修改 configurable 为 True 时 JS 会直接报错：VM305:1 Uncaught TypeError: Cannot redefine property: length），defineproperty 无法监听数组长度变化,，Vue 只能通过重写数组方法的方式变现达成监听的效果，但仅重写数组方法还是不能解决修改数组下标时监听的问题，只能再使用自定义 set 函数的方式，但是对 Proxy 代理对象进行操作时，所有的操作都会被捕捉，包括数组的方法和 length 操作
+- 对数组的监听：因为数组 length 的特殊性（length 的描述符 configurable 和 enumerable 为 false，并且*妄图*修改 configurable 为 True 时 JS 会直接报错：VM305:1 Uncaught TypeError: Cannot redefine property: length），defineproperty 无法监听数组长度变化，Vue 只能通过重写数组方法的方式变现达成监听的效果，但仅重写数组方法还是不能解决修改数组下标时监听的问题，只能再使用自定义 set 函数的方式，但是对 Proxy 代理对象进行操作时，所有的操作都会被捕捉，包括数组的方法和 length 操作
 - defineProperty 只能监听到 value 的 get/set 操作，但是 Proxy 有更全面和丰富的拦截器（除 `[[getOwnPropertyNames]]` 以外所有JS 的对象操作）
 
 ## TypeScript支持

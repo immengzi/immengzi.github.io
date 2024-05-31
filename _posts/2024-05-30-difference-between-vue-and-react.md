@@ -93,7 +93,7 @@ export default App
 
 ### 子组件
 
-Vue：<slot> 插槽
+Vue：`<slot>` 插槽
 
 React：`props.children`
 
@@ -105,7 +105,7 @@ React：JSX 语法
 
 ### 插值
 
-Vue：`{{name}}`
+Vue：{\{ name \}\}
 
 React：`{name}`
 
