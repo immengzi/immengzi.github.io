@@ -1,5 +1,5 @@
 ---
-title: 【MDN】Promise&Async/Await
+title: 【MDN】Promise & Async/Await
 date: 2024-05-31 11:00:48 +0800
 categories: [JavaScript]
 tags: [Promise, Async, Await]

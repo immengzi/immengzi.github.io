@@ -1,8 +1,8 @@
 ---
-title: Vue和React的区别
+title: Vue 和 React 的区别
 date: 2024-05-30 16:24:25 +0800
 categories: [前端]
-tags: [Vue，React]
+tags: [Vue, React]
 ---
 
 ## 组件

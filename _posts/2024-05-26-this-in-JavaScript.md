@@ -1,8 +1,8 @@
 ---
-title: JavaScript中的this指针
+title: JS 中的 this 指针
 date: 2024-05-26 23:57:34 +0800
 categories: [JavaScript]
-tags: [JS,this]
+tags: [JS,JavaScript,this]
 ---
 
 > 从三月中旬开始，一边从头学 JavaScript 一边面试，已遇到了若干次的 this 指针问题，似乎我从来只是靠猜。所以我想通过写笔记的方式来彻底搞懂 JS 中的 this。

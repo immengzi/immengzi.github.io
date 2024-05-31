@@ -1,8 +1,8 @@
 ---
-title: Vue2和Vue3的区别
+title: Vue2 和 Vue3 的区别
 date: 2024-05-30 09:22:54 +0800
 categories: [Vue]
-tags: [Vue，Vue2，Vue3]
+tags: [Vue, Vue2, Vue3]
 ---
 
 ## 响应式原理/双向数据绑定
