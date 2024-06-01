@@ -16,10 +16,10 @@ timezone: Asia/Shanghai
 
 title: XMengH # the main title
 
-tagline: A student focus on tech # it will display as the sub-title
+tagline: A CS student passionate about new tech, currently focused on Web Dev. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A student major in CS, love a range of langs.
+  A CS student passionate about new tech, currently focused on Web Dev.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
