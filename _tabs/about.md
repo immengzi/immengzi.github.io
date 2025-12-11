@@ -6,11 +6,13 @@ order: 4
 
 ## Who Am I
 
-Hello! I'm XMengH (she/her), a current student at Wuhan University, specializing in Computer Science. 
+Hi! I’m XMengH (she/her), a graduate of the School of Computer Science at Wuhan University. 
 
-As an aspiring Web developer, I am dedicated and curious, always eager to explore both CS-related and non-CS topics. Feel free to reach out if you want to discuss technology, share ideas, or simply chat about anything interesting!
+I’m currently working on kernel and virtualization technologies. I used to be passionate about front-end development, and I still enjoy exploring new ideas across different areas of tech. 
+
+Happy to meet everyone on the internet!
 
 ## Contact Me
 
-- Email: immengzi[at]outlook[dot]com (I check this all the time!)
-- QQ: 1686769963
+Email: immengzi[at]outlook[dot]com (I check this all the time)
+
